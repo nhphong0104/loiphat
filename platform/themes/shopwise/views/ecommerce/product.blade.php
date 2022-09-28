@@ -312,7 +312,6 @@
             </div>
         </div>
 
-
         @php
             $crossSellProducts = get_cross_sale_products($product);
         @endphp
