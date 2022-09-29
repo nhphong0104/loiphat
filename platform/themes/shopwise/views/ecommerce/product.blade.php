@@ -42,7 +42,7 @@
                                         <span class="on_sale_percentage_text">{{ get_sale_percentage($product->price, $product->front_sale_price) }}</span> <span>{{ __('Off') }}</span>
                                     </div>
                                     @else
-                                        <a class="btn btn-danger" href="">Liên hệ</a>
+                                        <a class="btn btn-danger" href="tel:0362651111">Liên hệ</a>
                                     @endif
                                 </div>
                                 @if (EcommerceHelper::isReviewEnabled())
