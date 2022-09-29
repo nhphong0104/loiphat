@@ -30,7 +30,45 @@
                             </div>
                         @endif
                     </div>
-                    {!! dynamic_sidebar('footer_sidebar') !!}
+                    <div class="col-lg-6 col-md-4 col-sm-6">
+                        <div class="widget">
+                            <h6 class="widget_title">{{ __('Contact Info') }}</h6>
+                            <ul class="contact_info contact_info_light">
+                                @if (theme_option('address'))
+                                    <li>
+                                        <i class="ti-location-pin"></i>
+                                        <p>{{ theme_option('address') }}</p>
+                                    </li>
+                                @endif
+                                    <li>
+                                        <i class="ti-location-pin"></i>
+                                        <p>533 phố Đại Nghĩa, Huyện Mỹ Đức, Tp. Hà Nội</p>
+                                    </li>
+                                    <li>
+                                        <i class="ti-location-pin"></i>
+                                        <p>537 phố Đại Nghĩa, Huyện Mỹ Đức, Tp. Hà Nội</p>
+                                    </li>
+                                @if (theme_option('hotline'))
+                                    <li>
+                                        <i class="ti-mobile"></i>
+                                        <p>{{ theme_option('hotline') }}</p>
+                                    </li>
+                                @endif
+                                    <li>
+                                        <i class="ti-world"></i>
+                                        <p><a href="https://www.facebook.com/profile.php?id=100083285169741">Thiết Bị Nhà Hàng Lợi Phát KV Miền Bắc</a></p>
+                                    </li>
+                                    <li>
+                                        <i class="ti-world"></i>
+                                        <p><a href="https://www.facebook.com/Thi%E1%BA%BFt-B%E1%BB%8B-B%E1%BA%BFp-Inox-L%E1%BB%A3i-Ph%C3%A1t-KV-Mi%E1%BB%81n-Trung-108367688618687">Thiết Bị Nhà Hàng Lợi Phát KV Miền Trung</a></p>
+                                    </li>
+                                    <li>
+                                        <i class="ti-world"></i>
+                                        <p><a href="https://www.facebook.com/profile.php?id=100084000212018">Thiết Bị Nhà Hàng Lợi Phát KV Miền Nam</a></p>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="widget">
                             <h6 class="widget_title">{{ __('Contact Info') }}</h6>
