@@ -2,7 +2,7 @@
         <div class="footer_top">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="widget">
                             @if (theme_option('logo_footer') || theme_option('logo'))
                                 <div class="footer_logo">
@@ -30,7 +30,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="col-lg-6 col-md-4 col-sm-6">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="widget">
                             <h6 class="widget_title">{{ __('Contact Info') }}</h6>
                             <ul class="contact_info contact_info_light">
@@ -69,7 +69,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="widget">
                             <h6 class="widget_title">{{ __('Contact Info') }}</h6>
                             <ul class="contact_info contact_info_light">
