@@ -35,11 +35,15 @@
                             <div class="product_description">
                                 <h4 class="product_title"><a href="{{ $product->url }}">{{ $product->name }}</a></h4>
                                 <div class="product_price">
+                                    @if($product->price > 0)
                                     <span class="price product-sale-price-text">{{ format_price($product->front_sale_price_with_taxes) }}</span>
                                     <del class="product-price-text" @if ($product->front_sale_price == $product->price) style="display: none" @endif>{{ format_price($product->price_with_taxes) }}</del>
                                     <div class="on_sale" @if ($product->front_sale_price == $product->price) style="display: none" @endif>
                                         <span class="on_sale_percentage_text">{{ get_sale_percentage($product->price, $product->front_sale_price) }}</span> <span>{{ __('Off') }}</span>
                                     </div>
+                                    @else
+                                        <a class="btn btn-danger" href="">Liên hệ</a>
+                                    @endif
                                 </div>
                                 @if (EcommerceHelper::isReviewEnabled())
                                     @if ($product->reviews_count > 0)
