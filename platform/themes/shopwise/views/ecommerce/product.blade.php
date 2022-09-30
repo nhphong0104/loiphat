@@ -68,51 +68,53 @@
                             </div>
                         @endif
 
-                        <hr />
-                        <div class="cart_extra">
-                            <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
-                                @csrf
-                                {!! apply_filters(ECOMMERCE_PRODUCT_DETAIL_EXTRA_HTML, null) !!}
-                                <input type="hidden" name="id" id="hidden-product-id" value="{{ ($product->is_variation || !$product->defaultVariation->product_id) ? $product->id : $product->defaultVariation->product_id }}"/>
-                                @if (EcommerceHelper::isCartEnabled())
-                                    <div class="cart-product-quantity">
-                                        <div class="quantity float-left">
-                                            <input type="button" value="-" class="minus">
-                                            <input type="text" name="qty" value="1" title="{{ __('Qty') }}" class="qty" size="4">
-                                            <input type="button" value="+" class="plus">
-                                        </div> &nbsp;
-                                        <div class="float-right number-items-available" style="@if (!$product->isOutOfStock()) display: none; @endif line-height: 45px;">
-                                            @if ($product->isOutOfStock())
-                                                <span class="text-danger">({{ __('Out of stock') }})</span>
-                                            @endif
+                        @if($product->price > 0)
+                            <hr />
+                            <div class="cart_extra">
+                                <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
+                                    @csrf
+                                    {!! apply_filters(ECOMMERCE_PRODUCT_DETAIL_EXTRA_HTML, null) !!}
+                                    <input type="hidden" name="id" id="hidden-product-id" value="{{ ($product->is_variation || !$product->defaultVariation->product_id) ? $product->id : $product->defaultVariation->product_id }}"/>
+                                    @if (EcommerceHelper::isCartEnabled())
+                                        <div class="cart-product-quantity">
+                                            <div class="quantity float-left">
+                                                <input type="button" value="-" class="minus">
+                                                <input type="text" name="qty" value="1" title="{{ __('Qty') }}" class="qty" size="4">
+                                                <input type="button" value="+" class="plus">
+                                            </div> &nbsp;
+                                            <div class="float-right number-items-available" style="@if (!$product->isOutOfStock()) display: none; @endif line-height: 45px;">
+                                                @if ($product->isOutOfStock())
+                                                    <span class="text-danger">({{ __('Out of stock') }})</span>
+                                                @endif
+                                            </div>
                                         </div>
+                                        <br>
+                                    @endif
+                                    <div class="cart_btn">
+                                        @if (EcommerceHelper::isCartEnabled())
+                                            <button class="btn btn-fill-out @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" @if ($product->isOutOfStock()) disabled @endif><i class="icon-basket-loaded"></i> {{ __('Add to cart') }}</button>
+                                        @endif
+                                        @if (EcommerceHelper::isQuickBuyButtonEnabled())
+                                            &nbsp;
+                                            <button class="btn btn-dark @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" @if ($product->isOutOfStock()) disabled @endif name="checkout">{{ __('Quick Buy') }}</button>
+                                        @endif
+                                        @if (EcommerceHelper::isCompareEnabled())
+                                            <a class="add_compare js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}" href="#"><i class="icon-shuffle"></i></a>
+                                        @endif
+                                        @if (EcommerceHelper::isWishlistEnabled())
+                                            <a class="add_wishlist js-add-to-wishlist-button" href="#" data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="icon-heart"></i></a>
+                                        @endif
                                     </div>
                                     <br>
-                                @endif
-                                <div class="cart_btn">
-                                    @if (EcommerceHelper::isCartEnabled())
-                                        <button class="btn btn-fill-out @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" @if ($product->isOutOfStock()) disabled @endif><i class="icon-basket-loaded"></i> {{ __('Add to cart') }}</button>
-                                    @endif
-                                    @if (EcommerceHelper::isQuickBuyButtonEnabled())
-                                        &nbsp;
-                                        <button class="btn btn-dark @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" @if ($product->isOutOfStock()) disabled @endif name="checkout">{{ __('Quick Buy') }}</button>
-                                    @endif
-                                    @if (EcommerceHelper::isCompareEnabled())
-                                        <a class="add_compare js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}" href="#"><i class="icon-shuffle"></i></a>
-                                    @endif
-                                    @if (EcommerceHelper::isWishlistEnabled())
-                                        <a class="add_wishlist js-add-to-wishlist-button" href="#" data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="icon-heart"></i></a>
-                                    @endif
-                                </div>
-                                <br>
-                                <div class="success-message text-success" style="display: none;">
-                                    <span></span>
-                                </div>
-                                <div class="error-message text-danger" style="display: none;">
-                                    <span></span>
-                                </div>
-                            </form>
-                        </div>
+                                    <div class="success-message text-success" style="display: none;">
+                                        <span></span>
+                                    </div>
+                                    <div class="error-message text-danger" style="display: none;">
+                                        <span></span>
+                                    </div>
+                                </form>
+                            </div>
+                        @endif
                         <hr />
                         <ul class="product-meta">
 
