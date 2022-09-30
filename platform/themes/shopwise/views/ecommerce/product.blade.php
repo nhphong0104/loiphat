@@ -9,7 +9,7 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-7 mb-4 mb-md-0">
+            <div class="col-lg-5 mb-4 mb-md-0">
                 <div class="product-image">
                     <div class="product_img_box">
                         <img id="product_img" src="{{ RvMedia::getImageUrl($product->image, 'medium', false, RvMedia::getDefaultImage()) }}" data-zoom-enable="{{ theme_option('enabled_product_image_zoom', 'yes') == 'yes' ? 'true' : 'false' }}" data-zoom-image="{{ RvMedia::getImageUrl($product->image, null, false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" />
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-7">
                 <div class="pr_detail">
                     <div class="product_description">
                         <h4 class="product_title"><a href="{{ $product->url }}">{{ $product->name }}</a></h4>
