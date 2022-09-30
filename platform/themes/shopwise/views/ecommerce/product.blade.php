@@ -39,8 +39,6 @@
                                 <div class="on_sale" @if ($product->front_sale_price == $product->price) style="display: none" @endif>
                                     <span class="on_sale_percentage_text">{{ get_sale_percentage($product->price, $product->front_sale_price) }}</span> <span>{{ __('Off') }}</span>
                                 </div>
-                            @else
-                                <a class="btn btn-danger" href="tel:0362651111">Liên hệ</a>
                             @endif
                         </div>
                         @if (EcommerceHelper::isReviewEnabled())
@@ -114,6 +112,9 @@
                                     </div>
                                 </form>
                             </div>
+                        @else
+                            <hr />
+                            <a class="btn btn-danger btn-sm" href="tel:0362651111">Liên hệ</a>
                         @endif
                         <hr />
                         <ul class="product-meta">
