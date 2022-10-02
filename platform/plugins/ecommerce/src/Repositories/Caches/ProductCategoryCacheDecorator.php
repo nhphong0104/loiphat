@@ -34,6 +34,14 @@ class ProductCategoryCacheDecorator extends CacheAbstractDecorator implements Pr
     /**
      * {@inheritDoc}
      */
+    public function getShowIndexCategories($limit)
+    {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getAllCategories($active = true)
     {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());

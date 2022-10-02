@@ -32,6 +32,11 @@ interface ProductCategoryInterface extends RepositoryInterface
     public function getFeaturedCategories($limit);
 
     /**
+     * @param int $limit
+     */
+    public function getShowIndexCategories($limit);
+
+    /**
      * @param bool $active
      * @return mixed
      */
