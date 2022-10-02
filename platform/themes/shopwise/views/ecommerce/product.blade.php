@@ -150,11 +150,6 @@
             <div class="col-lg-9">
                 <div class="row">
                     <div class="col-12">
-                        <div class="large_divider clearfix"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
                         <div class="tab-style3">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
