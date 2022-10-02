@@ -81,6 +81,11 @@ class ProductCategoryForm extends FormAbstract
                 'label_attr'    => ['class' => 'control-label'],
                 'default_value' => false,
             ])
+            ->add('pd_show_index', 'onOff', [
+                'label'         => trans('core/base::forms.pd_show_index'),
+                'label_attr'    => ['class' => 'control-label'],
+                'default_value' => false,
+            ])
             ->setBreakFieldPoint('status');
     }
 }
