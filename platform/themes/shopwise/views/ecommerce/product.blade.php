@@ -39,8 +39,8 @@
                 <div class="pr_detail">
                     <div class="product_description">
                         <h1 class="product_title"><a href="{{ $product->url }}">{{ $product->name }}</a></h1>
+                        @if($product->price > 0)
                         <div class="product_price">
-                            @if($product->price > 0)
                                 <span
                                     class="price product-sale-price-text">{{ format_price($product->front_sale_price_with_taxes) }}</span>
                                 <del class="product-price-text"
@@ -51,8 +51,8 @@
                                         class="on_sale_percentage_text">{{ get_sale_percentage($product->price, $product->front_sale_price) }}</span>
                                     <span>{{ __('Off') }}</span>
                                 </div>
-                            @endif
                         </div>
+                        @endif
                         @if (EcommerceHelper::isReviewEnabled())
                             @if ($product->reviews_count > 0)
                                 <div class="rating_wrap">
@@ -62,12 +62,129 @@
                                     </div>
                                     <span class="rating_num">({{ $product->reviews_count }})</span>
                                 </div>
+                            @else
+                                <div class="rating_wrap">
+                                    <div class="rating">
+                                        <div class="product_rate" style="width: 0%"></div>
+                                    </div>
+                                    <span class="rating_num">(0)</span>
+                                </div>
                             @endif
                         @endif
+                        <hr>
                         <div class="clearfix"></div>
                         <div class="row">
                             <div class="col-lg-8">
+                                @if ($product->variations()->count() > 0)
+                                    <div class="pr_switch_wrap">
+                                        {!! render_product_swatches($product, [
+                                            'selected' => $selectedAttrs,
+                                            'view'     => Theme::getThemeNamespace() . '::views.ecommerce.attributes.swatches-renderer'
+                                        ]) !!}
+                                    </div>
+                                @endif
 
+                                @if($product->price > 0)
+                                    <hr/>
+                                    <div class="cart_extra">
+                                        <form class="add-to-cart-form" method="POST"
+                                              action="{{ route('public.cart.add-to-cart') }}">
+                                            @csrf
+                                            {!! apply_filters(ECOMMERCE_PRODUCT_DETAIL_EXTRA_HTML, null) !!}
+                                            <input type="hidden" name="id" id="hidden-product-id"
+                                                   value="{{ ($product->is_variation || !$product->defaultVariation->product_id) ? $product->id : $product->defaultVariation->product_id }}"/>
+                                            @if (EcommerceHelper::isCartEnabled())
+                                                <div class="cart-product-quantity">
+                                                    <div class="quantity float-left">
+                                                        <input type="button" value="-" class="minus">
+                                                        <input type="text" name="qty" value="1" title="{{ __('Qty') }}"
+                                                               class="qty" size="4">
+                                                        <input type="button" value="+" class="plus">
+                                                    </div> &nbsp;
+                                                    <div class="float-right number-items-available"
+                                                         style="@if (!$product->isOutOfStock()) display: none; @endif line-height: 45px;">
+                                                        @if ($product->isOutOfStock())
+                                                            <span class="text-danger">({{ __('Out of stock') }})</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            @endif
+                                            <div class="cart_btn">
+                                                @if (EcommerceHelper::isCartEnabled())
+                                                    <button
+                                                        class="btn btn-fill-out @if ($product->isOutOfStock()) btn-disabled @endif"
+                                                        type="submit" @if ($product->isOutOfStock()) disabled @endif><i
+                                                            class="icon-basket-loaded"></i> {{ __('Add to cart') }}</button>
+                                                @endif
+                                                @if (EcommerceHelper::isQuickBuyButtonEnabled())
+                                                    &nbsp;
+                                                    <button
+                                                        class="btn btn-dark @if ($product->isOutOfStock()) btn-disabled @endif"
+                                                        type="submit" @if ($product->isOutOfStock()) disabled
+                                                        @endif name="checkout">{{ __('Quick Buy') }}</button>
+                                                @endif
+                                                @if (EcommerceHelper::isCompareEnabled())
+                                                    <a class="add_compare js-add-to-compare-button"
+                                                       data-url="{{ route('public.compare.add', $product->id) }}" href="#"><i
+                                                            class="icon-shuffle"></i></a>
+                                                @endif
+                                                @if (EcommerceHelper::isWishlistEnabled())
+                                                    <a class="add_wishlist js-add-to-wishlist-button" href="#"
+                                                       data-url="{{ route('public.wishlist.add', $product->id) }}"><i
+                                                            class="icon-heart"></i></a>
+                                                @endif
+                                            </div>
+                                            <br>
+                                            <div class="success-message text-success" style="display: none;">
+                                                <span></span>
+                                            </div>
+                                            <div class="error-message text-danger" style="display: none;">
+                                                <span></span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                @else
+                                    <hr/>
+                                    <a class="btn btn-danger btn-sm" href="tel:0362651111">Liên hệ</a>
+                                @endif
+                                <hr/>
+                                <ul class="product-meta">
+
+                                    <li id="product-sku" @if (!$product->sku) style="display: none" @endif>{{ __('SKU') }}:
+                                        <span>{{ $product->sku }}</span></li>
+                                    <li>{{ __('Category') }}:
+                                        @foreach ($product->categories()->get() as $category)
+                                            <a href="{{ $category->url }}">{{ $category->name }}</a>@if (!$loop->last),@endif
+                                        @endforeach
+                                    </li>
+                                    @if (!$product->tags->isEmpty())
+                                        <li>{{ __('Tags') }}:
+                                            @foreach ($product->tags as $tag)
+                                                <a href="{{ $tag->url }}" rel="tag">{{ $tag->name }}</a>@if (!$loop->last)
+                                                    ,@endif
+                                            @endforeach
+                                        </li>
+                                    @endif
+                                </ul>
+
+                                <div class="product_share">
+                                    <span>{{ __('Share') }}:</span>
+                                    <ul class="social_icons">
+                                        <li>
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($product->url) }}&title={{ rawurldecode($product->description) }}"
+                                               target="_blank" title="{{ __('Share on Facebook') }}"><i
+                                                    class="ion-social-facebook"></i></a></li>
+                                        <li>
+                                            <a href="https://twitter.com/intent/tweet?url={{ urlencode($product->url) }}&text={{ rawurldecode($product->description) }}"
+                                               target="_blank" title="{{ __('Share on Twitter') }}"><i
+                                                    class="ion-social-twitter"></i></a></li>
+                                        <li>
+                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode($product->url) }}&summary={{ rawurldecode($product->description) }}&source=Linkedin"
+                                               title="{{ __('Share on Linkedin') }}" target="_blank"><i
+                                                    class="ion-social-linkedin"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="order-support box_radius">
@@ -90,116 +207,7 @@
                             <p>{!! clean($product->description) !!}</p>
                             {!! apply_filters('ecommerce_after_product_description', null, $product) !!}
                         </div>
-                        @if ($product->variations()->count() > 0)
-                            <div class="pr_switch_wrap">
-                                {!! render_product_swatches($product, [
-                                    'selected' => $selectedAttrs,
-                                    'view'     => Theme::getThemeNamespace() . '::views.ecommerce.attributes.swatches-renderer'
-                                ]) !!}
-                            </div>
-                        @endif
 
-                        @if($product->price > 0)
-                            <hr/>
-                            <div class="cart_extra">
-                                <form class="add-to-cart-form" method="POST"
-                                      action="{{ route('public.cart.add-to-cart') }}">
-                                    @csrf
-                                    {!! apply_filters(ECOMMERCE_PRODUCT_DETAIL_EXTRA_HTML, null) !!}
-                                    <input type="hidden" name="id" id="hidden-product-id"
-                                           value="{{ ($product->is_variation || !$product->defaultVariation->product_id) ? $product->id : $product->defaultVariation->product_id }}"/>
-                                    @if (EcommerceHelper::isCartEnabled())
-                                        <div class="cart-product-quantity">
-                                            <div class="quantity float-left">
-                                                <input type="button" value="-" class="minus">
-                                                <input type="text" name="qty" value="1" title="{{ __('Qty') }}"
-                                                       class="qty" size="4">
-                                                <input type="button" value="+" class="plus">
-                                            </div> &nbsp;
-                                            <div class="float-right number-items-available"
-                                                 style="@if (!$product->isOutOfStock()) display: none; @endif line-height: 45px;">
-                                                @if ($product->isOutOfStock())
-                                                    <span class="text-danger">({{ __('Out of stock') }})</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <br>
-                                    @endif
-                                    <div class="cart_btn">
-                                        @if (EcommerceHelper::isCartEnabled())
-                                            <button
-                                                class="btn btn-fill-out @if ($product->isOutOfStock()) btn-disabled @endif"
-                                                type="submit" @if ($product->isOutOfStock()) disabled @endif><i
-                                                    class="icon-basket-loaded"></i> {{ __('Add to cart') }}</button>
-                                        @endif
-                                        @if (EcommerceHelper::isQuickBuyButtonEnabled())
-                                            &nbsp;
-                                            <button
-                                                class="btn btn-dark @if ($product->isOutOfStock()) btn-disabled @endif"
-                                                type="submit" @if ($product->isOutOfStock()) disabled
-                                                @endif name="checkout">{{ __('Quick Buy') }}</button>
-                                        @endif
-                                        @if (EcommerceHelper::isCompareEnabled())
-                                            <a class="add_compare js-add-to-compare-button"
-                                               data-url="{{ route('public.compare.add', $product->id) }}" href="#"><i
-                                                    class="icon-shuffle"></i></a>
-                                        @endif
-                                        @if (EcommerceHelper::isWishlistEnabled())
-                                            <a class="add_wishlist js-add-to-wishlist-button" href="#"
-                                               data-url="{{ route('public.wishlist.add', $product->id) }}"><i
-                                                    class="icon-heart"></i></a>
-                                        @endif
-                                    </div>
-                                    <br>
-                                    <div class="success-message text-success" style="display: none;">
-                                        <span></span>
-                                    </div>
-                                    <div class="error-message text-danger" style="display: none;">
-                                        <span></span>
-                                    </div>
-                                </form>
-                            </div>
-                        @else
-                            <hr/>
-                            <a class="btn btn-danger btn-sm" href="tel:0362651111">Liên hệ</a>
-                        @endif
-                        <hr/>
-                        <ul class="product-meta">
-
-                            <li id="product-sku" @if (!$product->sku) style="display: none" @endif>{{ __('SKU') }}:
-                                <span>{{ $product->sku }}</span></li>
-                            <li>{{ __('Category') }}:
-                                @foreach ($product->categories()->get() as $category)
-                                    <a href="{{ $category->url }}">{{ $category->name }}</a>@if (!$loop->last),@endif
-                                @endforeach
-                            </li>
-                            @if (!$product->tags->isEmpty())
-                                <li>{{ __('Tags') }}:
-                                    @foreach ($product->tags as $tag)
-                                        <a href="{{ $tag->url }}" rel="tag">{{ $tag->name }}</a>@if (!$loop->last)
-                                            ,@endif
-                                    @endforeach
-                                </li>
-                            @endif
-                        </ul>
-
-                        <div class="product_share">
-                            <span>{{ __('Share') }}:</span>
-                            <ul class="social_icons">
-                                <li>
-                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($product->url) }}&title={{ rawurldecode($product->description) }}"
-                                       target="_blank" title="{{ __('Share on Facebook') }}"><i
-                                            class="ion-social-facebook"></i></a></li>
-                                <li>
-                                    <a href="https://twitter.com/intent/tweet?url={{ urlencode($product->url) }}&text={{ rawurldecode($product->description) }}"
-                                       target="_blank" title="{{ __('Share on Twitter') }}"><i
-                                            class="ion-social-twitter"></i></a></li>
-                                <li>
-                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode($product->url) }}&summary={{ rawurldecode($product->description) }}&source=Linkedin"
-                                       title="{{ __('Share on Linkedin') }}" target="_blank"><i
-                                            class="ion-social-linkedin"></i></a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -2471,6 +2471,13 @@ footer .widget_title {
     color: #fff
 }
 
+.pr_detail .product_title{
+    font-size: 1.5rem;
+    text-overflow: inherit;
+    white-space: normal;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
 .product .product_title, .product_wrap .product_title {
     overflow: hidden;
     text-overflow: ellipsis;
