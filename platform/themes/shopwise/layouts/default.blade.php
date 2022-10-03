@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-12">
-                {!! Theme::partial('breadcrumbs') !!}--}}
+                {!! Theme::partial('breadcrumbs') !!}
             </div>
 {{--            <div class="col-md-6">--}}
 {{--                <div class="page-title">--}}

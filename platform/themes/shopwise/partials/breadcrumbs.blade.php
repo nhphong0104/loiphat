@@ -1,4 +1,4 @@
-<ol class="breadcrumb justify-content-md-end" itemscope itemtype="http://schema.org/BreadcrumbList">
+<ol class="breadcrumb justify-content-md-start" itemscope itemtype="http://schema.org/BreadcrumbList">
     @foreach ($crumbs = Theme::breadcrumb()->getCrumbs() as $i => $crumb)
         @if ($i != (count($crumbs) - 1))
             <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
