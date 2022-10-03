@@ -7,8 +7,8 @@ body, html {
 }
 
 body {
-    background: #e9edf0 none repeat scroll 0 0;
-    color: #687188;
+    background: #fff none repeat scroll 0 0;
+    color: #333;
     font-family: var(--primary-font), sans-serif;
     font-size: 16px
 }
