@@ -63,7 +63,7 @@
                                     <span class="rating_num">({{ $product->reviews_count }})</span>
                                 </div>
                             @else
-                                <div class="rating_wrap">
+                                <div class="rating_wrap clearfix">
                                     <div class="rating">
                                         <div class="product_rate" style="width: 0%"></div>
                                     </div>
