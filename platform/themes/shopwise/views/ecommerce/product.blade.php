@@ -38,7 +38,7 @@
             <div class="col-lg-8">
                 <div class="pr_detail">
                     <div class="product_description">
-                        <h4 class="product_title"><a href="{{ $product->url }}">{{ $product->name }}</a></h4>
+                        <h1 class="product_title"><a href="{{ $product->url }}">{{ $product->name }}</a></h1>
                         <div class="product_price">
                             @if($product->price > 0)
                                 <span

@@ -202,4 +202,7 @@ if (!function_exists('get_store')){
      * @param bool $full
      * @return array|string
      */
+    function get_store(){
+
+    }
 }
