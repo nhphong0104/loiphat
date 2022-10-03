@@ -35,6 +35,7 @@ class ProductCategory extends BaseModel
         'status',
         'image',
         'is_featured',
+        'pd_show_index'
     ];
 
     /**

@@ -19,6 +19,7 @@ class ProductCategoryRepository extends RepositoriesAbstract implements ProductC
             'order_by'    => 'desc',
             'is_child'    => null,
             'is_featured' => null,
+            'pd_show_index' => null,
             'num'         => null,
         ], $param);
 
@@ -38,6 +39,10 @@ class ProductCategoryRepository extends RepositoriesAbstract implements ProductC
 
         if ($param['is_featured']) {
             $data = $data->where('is_featured', $param['is_featured']);
+        }
+
+        if ($param['pd_show_index']) {
+            $data = $data->where('pd_show_index', $param['pd_show_index']);
         }
 
         $data = $data->orderBy('order', $param['order_by']);
@@ -70,6 +75,28 @@ class ProductCategoryRepository extends RepositoriesAbstract implements ProductC
             ->where([
                 'status'      => BaseStatusEnum::PUBLISHED,
                 'is_featured' => 1,
+            ])
+            ->select([
+                'id',
+                'name',
+                'icon',
+            ])
+            ->with(['slugable'])
+            ->orderBy('order')
+            ->limit($limit);
+
+        return $this->applyBeforeExecuteQuery($data)->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getShowIndexCategories($limit)
+    {
+        $data = $this->model
+            ->where([
+                'status'      => BaseStatusEnum::PUBLISHED,
+                'pd_show_index' => 1,
             ])
             ->select([
                 'id',
