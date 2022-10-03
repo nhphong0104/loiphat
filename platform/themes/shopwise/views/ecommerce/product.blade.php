@@ -37,41 +37,29 @@
             </div>
             <div class="col-lg-8">
                 <div class="pr_detail">
+                    <h1 class="product_title"><a href="{{ $product->url }}">{{ $product->name }}</a></h1>
+                    @if (EcommerceHelper::isReviewEnabled())
+                        @if ($product->reviews_count > 0)
+                            <div class="rating_wrap clearfix">
+                                <div class="rating">
+                                    <div class="product_rate"
+                                         style="width: {{ $product->reviews_avg * 20 }}%"></div>
+                                </div>
+                                <span class="rating_num">({{ $product->reviews_count }})</span>
+                            </div>
+                        @else
+                            <div class="rating_wrap clearfix">
+                                <div class="rating">
+                                    <div class="product_rate" style="width: 0%"></div>
+                                </div>
+                                <span class="rating_num">(0)</span>
+                            </div>
+                        @endif
+                    @endif
+                    <hr>
+                    <div class="clearfix"></div>
                     <div class="product_description">
-                        <h1 class="product_title"><a href="{{ $product->url }}">{{ $product->name }}</a></h1>
-                        @if($product->price > 0)
-                        <div class="product_price">
-                                <span
-                                    class="price product-sale-price-text">{{ format_price($product->front_sale_price_with_taxes) }}</span>
-                                <del class="product-price-text"
-                                     @if ($product->front_sale_price == $product->price) style="display: none" @endif>{{ format_price($product->price_with_taxes) }}</del>
-                                <div class="on_sale"
-                                     @if ($product->front_sale_price == $product->price) style="display: none" @endif>
-                                    <span
-                                        class="on_sale_percentage_text">{{ get_sale_percentage($product->price, $product->front_sale_price) }}</span>
-                                    <span>{{ __('Off') }}</span>
-                                </div>
-                        </div>
-                        @endif
-                        @if (EcommerceHelper::isReviewEnabled())
-                            @if ($product->reviews_count > 0)
-                                <div class="rating_wrap clearfix">
-                                    <div class="rating">
-                                        <div class="product_rate"
-                                             style="width: {{ $product->reviews_avg * 20 }}%"></div>
-                                    </div>
-                                    <span class="rating_num">({{ $product->reviews_count }})</span>
-                                </div>
-                            @else
-                                <div class="rating_wrap clearfix">
-                                    <div class="rating">
-                                        <div class="product_rate" style="width: 0%"></div>
-                                    </div>
-                                    <span class="rating_num">(0)</span>
-                                </div>
-                            @endif
-                        @endif
-                        <hr>
+
                         <div class="clearfix"></div>
                         <div class="row">
                             <div class="col-lg-8">

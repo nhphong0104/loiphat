@@ -2615,7 +2615,7 @@ footer .widget_title {
 }
 
 .pr_detail .rating_wrap {
-    float: right;
+    float: none;
     margin-top: 7px
 }
 
@@ -6386,4 +6386,7 @@ body[dir=rtl] .language-wrapper .language_bar_list li a img {
     .mobile-menu-item {
         display: block
     }
+}
+figure.image{
+    text-align: center;
 }
