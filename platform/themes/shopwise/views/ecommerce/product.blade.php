@@ -9,18 +9,25 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-5 mb-4 mb-md-0">
+            <div class="col-lg-4 mb-4 mb-md-0">
                 <div class="product-image">
                     <div class="product_img_box">
-                        <img id="product_img" src="{{ RvMedia::getImageUrl($product->image, 'medium', false, RvMedia::getDefaultImage()) }}" data-zoom-enable="{{ theme_option('enabled_product_image_zoom', 'yes') == 'yes' ? 'true' : 'false' }}" data-zoom-image="{{ RvMedia::getImageUrl($product->image, null, false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" />
+                        <img id="product_img"
+                             src="{{ RvMedia::getImageUrl($product->image, 'medium', false, RvMedia::getDefaultImage()) }}"
+                             data-zoom-enable="{{ theme_option('enabled_product_image_zoom', 'yes') == 'yes' ? 'true' : 'false' }}"
+                             data-zoom-image="{{ RvMedia::getImageUrl($product->image, null, false, RvMedia::getDefaultImage()) }}"
+                             alt="{{ $product->name }}"/>
                         <a href="#" class="product_img_zoom" title="Zoom">
                             <span class="linearicons-zoom-in"></span>
                         </a>
                     </div>
-                    <div id="pr_item_gallery" class="product_gallery_item slick_slider" data-slides-to-show="4" data-slides-to-scroll="1" data-infinite="false">
+                    <div id="pr_item_gallery" class="product_gallery_item slick_slider" data-slides-to-show="4"
+                         data-slides-to-scroll="1" data-infinite="false">
                         @foreach ($productImages as $img)
                             <div class="item">
-                                <a href="#" class="product_gallery_item @if ($loop->first) active @endif" data-image="{{ RvMedia::getImageUrl($img, 'medium') }}" data-zoom-image="{{ RvMedia::getImageUrl($img) }}">
+                                <a href="#" class="product_gallery_item @if ($loop->first) active @endif"
+                                   data-image="{{ RvMedia::getImageUrl($img, 'medium') }}"
+                                   data-zoom-image="{{ RvMedia::getImageUrl($img) }}">
                                     <img src="{{ RvMedia::getImageUrl($img, 'thumb') }}" alt="{{ $product->name }}"/>
                                 </a>
                             </div>
@@ -28,16 +35,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-7">
+            <div class="col-lg-8">
                 <div class="pr_detail">
                     <div class="product_description">
                         <h4 class="product_title"><a href="{{ $product->url }}">{{ $product->name }}</a></h4>
                         <div class="product_price">
                             @if($product->price > 0)
-                                <span class="price product-sale-price-text">{{ format_price($product->front_sale_price_with_taxes) }}</span>
-                                <del class="product-price-text" @if ($product->front_sale_price == $product->price) style="display: none" @endif>{{ format_price($product->price_with_taxes) }}</del>
-                                <div class="on_sale" @if ($product->front_sale_price == $product->price) style="display: none" @endif>
-                                    <span class="on_sale_percentage_text">{{ get_sale_percentage($product->price, $product->front_sale_price) }}</span> <span>{{ __('Off') }}</span>
+                                <span
+                                    class="price product-sale-price-text">{{ format_price($product->front_sale_price_with_taxes) }}</span>
+                                <del class="product-price-text"
+                                     @if ($product->front_sale_price == $product->price) style="display: none" @endif>{{ format_price($product->price_with_taxes) }}</del>
+                                <div class="on_sale"
+                                     @if ($product->front_sale_price == $product->price) style="display: none" @endif>
+                                    <span
+                                        class="on_sale_percentage_text">{{ get_sale_percentage($product->price, $product->front_sale_price) }}</span>
+                                    <span>{{ __('Off') }}</span>
                                 </div>
                             @endif
                         </div>
@@ -45,13 +57,34 @@
                             @if ($product->reviews_count > 0)
                                 <div class="rating_wrap">
                                     <div class="rating">
-                                        <div class="product_rate" style="width: {{ $product->reviews_avg * 20 }}%"></div>
+                                        <div class="product_rate"
+                                             style="width: {{ $product->reviews_avg * 20 }}%"></div>
                                     </div>
                                     <span class="rating_num">({{ $product->reviews_count }})</span>
                                 </div>
                             @endif
                         @endif
                         <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-lg-8">
+
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="order-support box_radius">
+                                    <div class="box-content">
+                                        <div style="text-align: center;">
+                                            <h3>Showroom</h3>
+                                        </div>
+                                        <div class="list-store">
+                                            <span class="fa fa-home" style="color:rgb(204, 0, 0);"></span>&nbsp;<span
+                                                style="font-size:14px;"><strong>Trụ sở HCM: </strong>33/4 Bùi Đình Túy, Quận Bình Thạnh<br>
+                                                <span class="fa fa-map-marker" style="font-size:2px;"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="pr_desc">
                             {!! apply_filters('ecommerce_before_product_description', null, $product) !!}
                             <p>{!! clean($product->description) !!}</p>
@@ -67,20 +100,24 @@
                         @endif
 
                         @if($product->price > 0)
-                            <hr />
+                            <hr/>
                             <div class="cart_extra">
-                                <form class="add-to-cart-form" method="POST" action="{{ route('public.cart.add-to-cart') }}">
+                                <form class="add-to-cart-form" method="POST"
+                                      action="{{ route('public.cart.add-to-cart') }}">
                                     @csrf
                                     {!! apply_filters(ECOMMERCE_PRODUCT_DETAIL_EXTRA_HTML, null) !!}
-                                    <input type="hidden" name="id" id="hidden-product-id" value="{{ ($product->is_variation || !$product->defaultVariation->product_id) ? $product->id : $product->defaultVariation->product_id }}"/>
+                                    <input type="hidden" name="id" id="hidden-product-id"
+                                           value="{{ ($product->is_variation || !$product->defaultVariation->product_id) ? $product->id : $product->defaultVariation->product_id }}"/>
                                     @if (EcommerceHelper::isCartEnabled())
                                         <div class="cart-product-quantity">
                                             <div class="quantity float-left">
                                                 <input type="button" value="-" class="minus">
-                                                <input type="text" name="qty" value="1" title="{{ __('Qty') }}" class="qty" size="4">
+                                                <input type="text" name="qty" value="1" title="{{ __('Qty') }}"
+                                                       class="qty" size="4">
                                                 <input type="button" value="+" class="plus">
                                             </div> &nbsp;
-                                            <div class="float-right number-items-available" style="@if (!$product->isOutOfStock()) display: none; @endif line-height: 45px;">
+                                            <div class="float-right number-items-available"
+                                                 style="@if (!$product->isOutOfStock()) display: none; @endif line-height: 45px;">
                                                 @if ($product->isOutOfStock())
                                                     <span class="text-danger">({{ __('Out of stock') }})</span>
                                                 @endif
@@ -90,17 +127,27 @@
                                     @endif
                                     <div class="cart_btn">
                                         @if (EcommerceHelper::isCartEnabled())
-                                            <button class="btn btn-fill-out @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" @if ($product->isOutOfStock()) disabled @endif><i class="icon-basket-loaded"></i> {{ __('Add to cart') }}</button>
+                                            <button
+                                                class="btn btn-fill-out @if ($product->isOutOfStock()) btn-disabled @endif"
+                                                type="submit" @if ($product->isOutOfStock()) disabled @endif><i
+                                                    class="icon-basket-loaded"></i> {{ __('Add to cart') }}</button>
                                         @endif
                                         @if (EcommerceHelper::isQuickBuyButtonEnabled())
                                             &nbsp;
-                                            <button class="btn btn-dark @if ($product->isOutOfStock()) btn-disabled @endif" type="submit" @if ($product->isOutOfStock()) disabled @endif name="checkout">{{ __('Quick Buy') }}</button>
+                                            <button
+                                                class="btn btn-dark @if ($product->isOutOfStock()) btn-disabled @endif"
+                                                type="submit" @if ($product->isOutOfStock()) disabled
+                                                @endif name="checkout">{{ __('Quick Buy') }}</button>
                                         @endif
                                         @if (EcommerceHelper::isCompareEnabled())
-                                            <a class="add_compare js-add-to-compare-button" data-url="{{ route('public.compare.add', $product->id) }}" href="#"><i class="icon-shuffle"></i></a>
+                                            <a class="add_compare js-add-to-compare-button"
+                                               data-url="{{ route('public.compare.add', $product->id) }}" href="#"><i
+                                                    class="icon-shuffle"></i></a>
                                         @endif
                                         @if (EcommerceHelper::isWishlistEnabled())
-                                            <a class="add_wishlist js-add-to-wishlist-button" href="#" data-url="{{ route('public.wishlist.add', $product->id) }}"><i class="icon-heart"></i></a>
+                                            <a class="add_wishlist js-add-to-wishlist-button" href="#"
+                                               data-url="{{ route('public.wishlist.add', $product->id) }}"><i
+                                                    class="icon-heart"></i></a>
                                         @endif
                                     </div>
                                     <br>
@@ -113,13 +160,14 @@
                                 </form>
                             </div>
                         @else
-                            <hr />
+                            <hr/>
                             <a class="btn btn-danger btn-sm" href="tel:0362651111">Liên hệ</a>
                         @endif
-                        <hr />
+                        <hr/>
                         <ul class="product-meta">
 
-                            <li id="product-sku" @if (!$product->sku) style="display: none" @endif>{{ __('SKU') }}: <span>{{ $product->sku }}</span></li>
+                            <li id="product-sku" @if (!$product->sku) style="display: none" @endif>{{ __('SKU') }}:
+                                <span>{{ $product->sku }}</span></li>
                             <li>{{ __('Category') }}:
                                 @foreach ($product->categories()->get() as $category)
                                     <a href="{{ $category->url }}">{{ $category->name }}</a>@if (!$loop->last),@endif
@@ -128,7 +176,8 @@
                             @if (!$product->tags->isEmpty())
                                 <li>{{ __('Tags') }}:
                                     @foreach ($product->tags as $tag)
-                                        <a href="{{ $tag->url }}" rel="tag">{{ $tag->name }}</a>@if (!$loop->last),@endif
+                                        <a href="{{ $tag->url }}" rel="tag">{{ $tag->name }}</a>@if (!$loop->last)
+                                            ,@endif
                                     @endforeach
                                 </li>
                             @endif
@@ -137,9 +186,18 @@
                         <div class="product_share">
                             <span>{{ __('Share') }}:</span>
                             <ul class="social_icons">
-                                <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($product->url) }}&title={{ rawurldecode($product->description) }}" target="_blank" title="{{ __('Share on Facebook') }}"><i class="ion-social-facebook"></i></a></li>
-                                <li><a href="https://twitter.com/intent/tweet?url={{ urlencode($product->url) }}&text={{ rawurldecode($product->description) }}" target="_blank" title="{{ __('Share on Twitter') }}"><i class="ion-social-twitter"></i></a></li>
-                                <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode($product->url) }}&summary={{ rawurldecode($product->description) }}&source=Linkedin" title="{{ __('Share on Linkedin') }}" target="_blank"><i class="ion-social-linkedin"></i></a></li>
+                                <li>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($product->url) }}&title={{ rawurldecode($product->description) }}"
+                                       target="_blank" title="{{ __('Share on Facebook') }}"><i
+                                            class="ion-social-facebook"></i></a></li>
+                                <li>
+                                    <a href="https://twitter.com/intent/tweet?url={{ urlencode($product->url) }}&text={{ rawurldecode($product->description) }}"
+                                       target="_blank" title="{{ __('Share on Twitter') }}"><i
+                                            class="ion-social-twitter"></i></a></li>
+                                <li>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode($product->url) }}&summary={{ rawurldecode($product->description) }}&source=Linkedin"
+                                       title="{{ __('Share on Linkedin') }}" target="_blank"><i
+                                            class="ion-social-linkedin"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -153,7 +211,9 @@
                         <div class="tab-style3">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">{{ __('Description') }}</a>
+                                    <a class="nav-link active" id="description-tab" data-toggle="tab"
+                                       href="#description" role="tab" aria-controls="description"
+                                       aria-selected="true">{{ __('Description') }}</a>
                                 </li>
                                 {{--                        @if (EcommerceHelper::isReviewEnabled())--}}
                                 {{--                            <li class="nav-item">--}}
@@ -163,19 +223,21 @@
                                 @if (is_plugin_active('faq'))
                                     @if (count($product->faq_items) > 0)
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#tab-faq">{{ __('Questions and Answers') }}</a>
+                                            <a class="nav-link" data-toggle="tab"
+                                               href="#tab-faq">{{ __('Questions and Answers') }}</a>
                                         </li>
                                     @endif
                                 @endif
                             </ul>
                             <div class="tab-content shop_info_tab">
 
-                                <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                                <div class="tab-pane fade show active" id="description" role="tabpanel"
+                                     aria-labelledby="description-tab">
                                     <div id="app">
                                         {!! clean($product->content) !!}
                                     </div>
                                     @if (theme_option('facebook_comment_enabled_in_product', 'yes') == 'yes')
-                                        <br />
+                                        <br/>
                                         {!! apply_filters(BASE_FILTER_PUBLIC_COMMENT_AREA, Theme::partial('comments')) !!}
                                     @endif
                                 </div>
@@ -188,9 +250,13 @@
                                                     <div class="block--review">
                                                         <div class="block__images row m-0 block__images_total">
                                                             @foreach ($product->review_images as $img)
-                                                                <a href="{{ RvMedia::getImageUrl($img) }}" class="col-lg-1 col-sm-2 col-3 more-review-images @if ($loop->iteration > 12) d-none @endif">
+                                                                <a href="{{ RvMedia::getImageUrl($img) }}"
+                                                                   class="col-lg-1 col-sm-2 col-3 more-review-images @if ($loop->iteration > 12) d-none @endif">
                                                                     <div class="border position-relative rounded">
-                                                                        <img src="{{ RvMedia::getImageUrl($img, 'thumb') }}" alt="{{ $product->name }}" class="img-responsive rounded h-100">
+                                                                        <img
+                                                                            src="{{ RvMedia::getImageUrl($img, 'thumb') }}"
+                                                                            alt="{{ $product->name }}"
+                                                                            class="img-responsive rounded h-100">
                                                                         @if ($loop->iteration == 12 && (count($product->review_images) - $loop->iteration > 0))
                                                                             <span>+{{ count($product->review_images) - $loop->iteration }}</span>
                                                                         @endif
@@ -203,13 +269,16 @@
                                             @endif
                                             <div class="comments block--product-reviews">
                                                 <h5 class="product_tab_title">{{ __(':count Reviews For :product', ['count' => $product->reviews_count, 'product' => $product->name]) }}</h5>
-                                                <product-reviews-component url="{{ route('public.ajax.product-reviews', $product->id) }}"></product-reviews-component>
+                                                <product-reviews-component
+                                                    url="{{ route('public.ajax.product-reviews', $product->id) }}"></product-reviews-component>
                                             </div>
                                         </div>
                                         <div class="review_form field_form mt-3">
                                             <h5>{{ __('Add a review') }}</h5>
                                             @if (!auth('customer')->check())
-                                                <p class="text-danger">{{ __('Please') }} <a href="{{ route('customer.login') }}">{{ __('login') }}</a> {{ __('to write review!') }}</p>
+                                                <p class="text-danger">{{ __('Please') }} <a
+                                                        href="{{ route('customer.login') }}">{{ __('login') }}</a> {{ __('to write review!') }}
+                                                </p>
                                             @endif
                                             {!! Form::open(['route' => 'public.reviews.create', 'method' => 'post', 'class' => 'row form-review-product', 'files' => true]) !!}
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -224,12 +293,15 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-12">
-                                                <textarea class="form-control" name="comment" id="txt-comment" rows="4" placeholder="{{ __('Write your review') }}" @if (!auth('customer')->check()) disabled @endif></textarea>
+                                                <textarea class="form-control" name="comment" id="txt-comment" rows="4"
+                                                          placeholder="{{ __('Write your review') }}"
+                                                          @if (!auth('customer')->check()) disabled @endif></textarea>
                                             </div>
                                             <div class="form-group col-12">
                                                 <script type="text/x-custom-template" id="review-image-template">
                                                     <span class="image-viewer__item" data-id="__id__">
-                                                <img src="{{ RvMedia::getDefaultImage() }}" alt="Preview" class="img-responsive d-block">
+                                                <img src="{{ RvMedia::getDefaultImage() }}" alt="Preview"
+                                                     class="img-responsive d-block">
                                                 <span class="image-viewer__icon-remove">
                                                     <i class="ion-close"></i>
                                                 </span>
@@ -241,7 +313,8 @@
                                                             <div class="d-table">
                                                                 <div class="image-upload__uploader">
                                                                     <i class="ion-image image-upload__icon"></i>
-                                                                    <div class="image-upload__text">{{ __('Upload photos') }}</div>
+                                                                    <div
+                                                                        class="image-upload__text">{{ __('Upload photos') }}</div>
                                                                     <input type="file"
                                                                            name="images[]"
                                                                            data-max-files="{{ EcommerceHelper::reviewMaxFileNumber() }}"
@@ -272,7 +345,11 @@
                                             </div>
 
                                             <div class="form-group col-12">
-                                                <button type="submit" class="btn btn-fill-out @if (!auth('customer')->check()) btn-disabled @endif" @if (!auth('customer')->check()) disabled @endif name="submit" value="Submit">Submit Review</button>
+                                                <button type="submit"
+                                                        class="btn btn-fill-out @if (!auth('customer')->check()) btn-disabled @endif"
+                                                        @if (!auth('customer')->check()) disabled @endif name="submit"
+                                                        value="Submit">Submit Review
+                                                </button>
                                             </div>
                                             {!! Form::close() !!}
                                         </div>
@@ -286,13 +363,21 @@
                                                 <div class="card">
                                                     <div class="card-header" id="heading-faq-{{ $loop->index }}">
                                                         <h2 class="mb-0">
-                                                            <button class="btn btn-link btn-block text-left @if (!$loop->first) collapsed @endif" type="button" data-toggle="collapse" data-target="#collapse-faq-{{ $loop->index }}" aria-expanded="true" aria-controls="collapse-faq-{{ $loop->index }}">
+                                                            <button
+                                                                class="btn btn-link btn-block text-left @if (!$loop->first) collapsed @endif"
+                                                                type="button" data-toggle="collapse"
+                                                                data-target="#collapse-faq-{{ $loop->index }}"
+                                                                aria-expanded="true"
+                                                                aria-controls="collapse-faq-{{ $loop->index }}">
                                                                 {!! clean($faq[0]['value']) !!}
                                                             </button>
                                                         </h2>
                                                     </div>
 
-                                                    <div id="collapse-faq-{{ $loop->index }}" class="collapse @if ($loop->first) show @endif" aria-labelledby="heading-faq-{{ $loop->index }}" data-parent="#faq-accordion">
+                                                    <div id="collapse-faq-{{ $loop->index }}"
+                                                         class="collapse @if ($loop->first) show @endif"
+                                                         aria-labelledby="heading-faq-{{ $loop->index }}"
+                                                         data-parent="#faq-accordion">
                                                         <div class="card-body">
                                                             {!! clean($faq[1]['value']) !!}
                                                         </div>
@@ -329,7 +414,8 @@
                     <div class="heading_s1">
                         <h3>{{ __('Customers who bought this item also bought') }}</h3>
                     </div>
-                    <div class="releted_product_slider carousel_slider owl-carousel owl-theme" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
+                    <div class="releted_product_slider carousel_slider owl-carousel owl-theme" data-margin="20"
+                         data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
                         @foreach ($crossSellProducts as $crossSellProduct)
                             {!! Theme::partial('product-item-grid', ['product' => $crossSellProduct]) !!}
                         @endforeach
@@ -343,7 +429,8 @@
                 <div class="heading_s1">
                     <h3>{{ __('Related Products') }}</h3>
                 </div>
-                <div class="releted_product_slider carousel_slider owl-carousel owl-theme" data-margin="20" data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
+                <div class="releted_product_slider carousel_slider owl-carousel owl-theme" data-margin="20"
+                     data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
                     @php
                         $relatedProducts = get_related_products($product);
                     @endphp

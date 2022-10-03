@@ -5495,7 +5495,7 @@ header #navCatContent ul li .dropdown-menu {
 
 .product__attribute label {
     margin-bottom: 0;
-    max-width: 60px
+    max-width: 100px
 }
 
 .product__attribute .form-control {

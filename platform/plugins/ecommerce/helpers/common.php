@@ -196,3 +196,10 @@ if (!function_exists('mapped_implode')) {
         );
     }
 }
+
+if (!function_exists('get_store')){
+    /**
+     * @param bool $full
+     * @return array|string
+     */
+}
