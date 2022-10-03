@@ -55,7 +55,7 @@
                         @endif
                         @if (EcommerceHelper::isReviewEnabled())
                             @if ($product->reviews_count > 0)
-                                <div class="rating_wrap">
+                                <div class="rating_wrap d-block">
                                     <div class="rating">
                                         <div class="product_rate"
                                              style="width: {{ $product->reviews_avg * 20 }}%"></div>
