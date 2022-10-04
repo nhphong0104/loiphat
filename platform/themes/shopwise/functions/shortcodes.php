@@ -130,13 +130,13 @@ app()->booted(function () {
                     return null;
                 }
 
-                return Theme::partial('short-codes.product-category-products', compact('category'));
+                return Theme::partial('shortcodes.product-category-products', compact('category'));
             });
 
         shortcode()->setAdminConfig('product-category-products', function ($attributes) {
             $categories = app(ProductCategoryInterface::class)->pluck('name', 'id', ['status' => BaseStatusEnum::PUBLISHED]);
 
-            return Theme::partial('short-codes.product-category-products-admin-config', compact('attributes', 'categories'));
+            return Theme::partial('shortcodes.product-category-products-admin-config', compact('attributes', 'categories'));
         });
 
     }
