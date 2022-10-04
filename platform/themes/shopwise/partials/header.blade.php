@@ -110,8 +110,8 @@
         <div class="top-header d-none d-md-block">
             <div class="container">
                 <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-center justify-content-start justify-content-md-start">
+                    <div class="col-md-6">
+                            <div class="d-flex justify-content-start justify-content-md-start">
                                 @if (is_plugin_active('language'))
                                     <div class="language-wrapper">
                                         {!! Theme::partial('language-switcher') !!}
@@ -145,7 +145,7 @@
                             </div>
                         </div>
                     <div class="col-md-6">
-                        <div class="d-flex align-items-center justify-content-end justify-content-md-end">
+                        <div class="d-flex justify-content-end justify-content-md-end">
                             @if (is_plugin_active('ecommerce'))
                                 <ul class="header_list">
                                     @if (EcommerceHelper::isCompareEnabled())
