@@ -6,6 +6,7 @@ use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Blog\Repositories\Interfaces\PostInterface;
 use Botble\Ecommerce\Repositories\Interfaces\FlashSaleInterface;
+use Botble\Ecommerce\Repositories\Interfaces\ProductCategoryInterface;
 use Botble\Ecommerce\Repositories\Interfaces\ProductInterface;
 use Botble\Ecommerce\Repositories\Interfaces\ProductVariationInterface;
 use Botble\Ecommerce\Repositories\Interfaces\ReviewInterface;
@@ -57,6 +58,53 @@ class ShopwiseController extends PublicController
 
         return $response->setData($data);
     }
+
+    /**
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function ajaxGetProductsByCategoryId(
+        Request $request,
+        BaseHttpResponse $response,
+        ProductInterface $productRepository
+    ) {
+        if (!$request->ajax() || !$request->wantsJson()) {
+            return $response->setNextUrl(route('public.index'));
+        }
+
+        $categoryId = $request->input('category_id');
+
+        if (!$categoryId) {
+            return $response;
+        }
+
+        $withCount = [];
+        if (EcommerceHelper::isReviewEnabled()) {
+            $withCount = [
+                'reviews',
+                'reviews as reviews_avg' => function ($query) {
+                    $query->select(DB::raw('avg(star)'));
+                },
+            ];
+        }
+
+        $products = $productRepository->getProductsByCategories([
+            'categories' => [
+                'by'       => 'id',
+                'value_in' => [$categoryId],
+            ],
+            'take'       => (int) $request->input('limit', 10),
+            'withCount'  => $withCount,
+        ]);
+
+        $data = [];
+        foreach ($products as $product) {
+            $data[] = Theme::partial('product-item', compact('product'));
+        }
+
+        return $response->setData($data);
+    }
+
 
     /**
      * @param Request $request

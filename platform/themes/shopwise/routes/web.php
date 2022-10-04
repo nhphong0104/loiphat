@@ -41,6 +41,12 @@ Route::group(['namespace' => 'Theme\Shopwise\Http\Controllers', 'middleware' => 
 
         Route::get('ajax/get-flash-sales', 'ShopwiseController@ajaxGetFlashSales')
             ->name('public.ajax.get-flash-sales');
+
+        Route::get('ajax/product-categories/products', 'ShopwiseController@ajaxGetProductsByCategoryId')
+            ->name('public.ajax.product-category-products');
+
+        Route::get('ajax/get-product-categories', 'ShopwiseController@ajaxGetProductCategories')
+            ->name('public.ajax.get-product-categories');
     });
 
 });
