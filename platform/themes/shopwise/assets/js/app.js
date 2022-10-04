@@ -15,6 +15,7 @@ import FeaturedNewsComponent from './components/FeaturedNewsComponent';
 import TestimonialsComponent from './components/TestimonialsComponent';
 import ProductReviewsComponent from './components/ProductReviewsComponent';
 import FlashSaleProductsComponent from './components/FlashSaleProductsComponent';
+import ProductCategoryProductsComponent from "./components/ProductCategoryProductsComponent";
 import Vue from 'vue';
 
 window.axios = require('axios');
@@ -38,6 +39,7 @@ Vue.component('featured-news-component', FeaturedNewsComponent);
 Vue.component('testimonials-component', TestimonialsComponent);
 Vue.component('product-reviews-component', ProductReviewsComponent);
 Vue.component('flash-sale-products-component', FlashSaleProductsComponent);
+Vue.component('product-category-products-component', ProductCategoryProductsComponent);
 
 /**
  * This let us access the `__` method for localization in VueJS templates
