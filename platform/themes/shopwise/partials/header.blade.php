@@ -111,39 +111,39 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                            <div class="d-flex justify-content-start justify-content-md-start">
-                                @if (is_plugin_active('language'))
-                                    <div class="language-wrapper">
-                                        {!! Theme::partial('language-switcher') !!}
+                        <div class="d-flex justify-content-start justify-content-md-start">
+                            @if (is_plugin_active('language'))
+                                <div class="language-wrapper">
+                                    {!! Theme::partial('language-switcher') !!}
+                                </div>
+                            @endif
+                            @if (is_plugin_active('ecommerce'))
+                                @php $currencies = get_all_currencies(); @endphp
+                                @if (count($currencies) > 1)
+                                    <div class="language-wrapper choose-currency mr-3">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle btn-select-language" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                {{ get_application_currency()->title }}
+                                                <span class="language-caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu language_bar_chooser">
+                                                @foreach ($currencies as $currency)
+                                                    <li>
+                                                        <a href="{{ route('public.change-currency', $currency->title) }}" @if (get_application_currency_id() == $currency->id) class="active" @endif><span>{{ $currency->title }}</span></a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
                                 @endif
-                                @if (is_plugin_active('ecommerce'))
-                                    @php $currencies = get_all_currencies(); @endphp
-                                    @if (count($currencies) > 1)
-                                        <div class="language-wrapper choose-currency mr-3">
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle btn-select-language" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    {{ get_application_currency()->title }}
-                                                    <span class="language-caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu language_bar_chooser">
-                                                    @foreach ($currencies as $currency)
-                                                        <li>
-                                                            <a href="{{ route('public.change-currency', $currency->title) }}" @if (get_application_currency_id() == $currency->id) class="active" @endif><span>{{ $currency->title }}</span></a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endif
-                                @if (theme_option('hotline'))
-                                    <ul class="contact_detail text-center text-lg-left">
-                                        <li><i class="ti-mobile"></i><span>{{ theme_option('hotline') }}</span></li>
-                                    </ul>
-                                @endif
-                            </div>
+                            @endif
+                            @if (theme_option('hotline'))
+                                <ul class="contact_detail text-center text-lg-left">
+                                    <li><i class="ti-mobile"></i><span>{{ theme_option('hotline') }}</span></li>
+                                </ul>
+                            @endif
                         </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="d-flex justify-content-end justify-content-md-end">
                             @if (is_plugin_active('ecommerce'))

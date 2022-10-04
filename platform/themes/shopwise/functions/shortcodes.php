@@ -3,6 +3,7 @@
 use Botble\Ads\Repositories\Interfaces\AdsInterface;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Faq\Repositories\Interfaces\FaqCategoryInterface;
+use Botble\Ecommerce\Repositories\Interfaces\ProductCategoryInterface;
 use Botble\Theme\Supports\ThemeSupport;
 
 app()->booted(function () {
@@ -113,6 +114,31 @@ app()->booted(function () {
         shortcode()->setAdminConfig('flash-sale', function ($attributes) {
             return Theme::partial('shortcodes.flash-sale-admin-config', compact('attributes'));
         });
+
+        add_shortcode('product-category-products', __('Product category products'), __('Product category products'),
+            function ($shortCode) {
+                $category = app(ProductCategoryInterface::class)->getFirstBy([
+                    'status' => BaseStatusEnum::PUBLISHED,
+                    'id'     => $shortCode->category_id,
+                ], ['*'], [
+                    'children' => function ($query) {
+                        $query->limit(3);
+                    },
+                ]);
+
+                if (!$category) {
+                    return null;
+                }
+
+                return Theme::partial('short-codes.product-category-products', compact('category'));
+            });
+
+        shortcode()->setAdminConfig('product-category-products', function ($attributes) {
+            $categories = app(ProductCategoryInterface::class)->pluck('name', 'id', ['status' => BaseStatusEnum::PUBLISHED]);
+
+            return Theme::partial('short-codes.product-category-products-admin-config', compact('attributes', 'categories'));
+        });
+
     }
 
     add_shortcode('banners', __('Banners'), __('Banners'), function ($shortcode) {
